@@ -9,8 +9,8 @@ type PageProps = {
   };
 };
 
-function Page({ searchParams }: PageProps) {
-  const { phone, name } = searchParams;
+async function Page({ searchParams }: PageProps) {
+  const { phone, name } =await searchParams;
 
  // if(!phone||!name) return <div>
  //   Not found
