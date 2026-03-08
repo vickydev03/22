@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 import VerifyOtpView from "@/modules/signin/view/VerifyOtpView";
 import React, { Suspense } from "react";
 
