@@ -1,4 +1,4 @@
-// export const dynamic = "force-dynamic";
+ export const dynamic = "force-dynamic";
 import VerifyOtpView from "@/modules/signin/view/VerifyOtpView";
 import React, { Suspense } from "react";
 
@@ -12,9 +12,9 @@ type PageProps = {
 function Page({ searchParams }: PageProps) {
   const { phone, name } = searchParams;
 
-  if(!phone||!name) return <div>
-    Not found
-  </div>
+ // if(!phone||!name) return <div>
+ //   Not found
+ // </div>
   return (
     <div className="w-full h-full">
       
