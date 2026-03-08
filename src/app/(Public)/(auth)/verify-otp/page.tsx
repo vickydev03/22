@@ -11,10 +11,11 @@ type PageProps = {
 
 async function Page({ searchParams }: PageProps) {
   const { phone, name } =await searchParams;
-
+  console.log(phone,name)
  // if(!phone||!name) return <div>
  //   Not found
  // </div>
+
   return (
     <div className="w-full h-full">
       
