@@ -68,7 +68,7 @@ function StudentsView() {
             Students
           </div>
           <div className="">
-            <Button className="bg-primary text-xs md:text-sm capitalize px-4 lg:py-2">
+            <Button className="bg-primary hidden text-xs md:text-sm capitalize px-4 lg:py-2">
               Add Users
             </Button>
           </div>
