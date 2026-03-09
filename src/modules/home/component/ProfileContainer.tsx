@@ -216,7 +216,7 @@ function ProfileContainer() {
                     </div>
                   </div>
                 );
-                  </div/>
+                  </div>
               })}
             </div>
           </TabsContent>
