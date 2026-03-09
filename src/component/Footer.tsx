@@ -4,7 +4,7 @@ import React from "react";
 
 function Footer() {
   const items = [
-    { label: "Workshops", url: "/workshops" },
+    { label: "Workshops", url: "/workshop" },
     { label: "Online Tutorials", url: "/online-tutorials" },
     { label: "Contact Us", url: "/Contact-us" },
     { label: "Regular Classes", url: "/regular-classes" },
