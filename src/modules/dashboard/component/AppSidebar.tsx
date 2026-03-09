@@ -189,6 +189,8 @@ export function AppSidebar() {
             {[
               { name: "All Tutorials", href: "/dashboard/online-tutorials" },
               { name: "Enrollments", href: "/dashboard/online-tutorials/enrollments"},
+
+{ name: "Create", href: "/dashboard/online-tutorials/create"},
             ].map((item) => {
               const isActive = pathname === item.href;
 
