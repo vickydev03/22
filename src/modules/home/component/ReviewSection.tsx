@@ -111,7 +111,7 @@ function ReviewSection() {
           <div className="w-full  relative">
             {canScrollLeft && (
               <div
-                className="h-full w-14 md:w-24  bg-[linear-gradient(262.81deg,rgba(223,242,238,0.9)_46.14%,rgba(223,242,238,0)_90.51%)]
+                className="h-full w-14 md:w-24  bg-transparent
               absolute left-0 z-50 flex items-center justify-start"
               >
                 <Button
