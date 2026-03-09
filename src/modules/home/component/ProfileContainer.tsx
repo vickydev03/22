@@ -190,8 +190,9 @@ function ProfileContainer() {
             <div className=" grid grid-cols-1 bg-[#FFFBF4] rounded-[30px] md:grid-cols-3 ">
               {data.tutorialAccess.map((e, i) => {
                 return (
-                  <div
-                    key={i}
+                  <Link key={i} href={`/online-tutorials/${e.id}/video-play`}>
+                    <div
+                    
                     className=" w-full flex flex-col gap-5  px-4 py-4"
                   >
                     <div className=" relative">
@@ -215,6 +216,7 @@ function ProfileContainer() {
                     </div>
                   </div>
                 );
+                  </div/>
               })}
             </div>
           </TabsContent>
