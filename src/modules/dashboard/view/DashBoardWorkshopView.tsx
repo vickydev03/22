@@ -66,7 +66,7 @@ function DashBoardWorkshopView() {
                     <Button className="bg-primary text-xs md:text-sm capitalize px-4 lg:py-2">
                     <Link href={"/dashboard/workshops/registrations"}>
 Add Workshop
-</Link/>
+</Link>
                       
                     </Button>
                   </div>
