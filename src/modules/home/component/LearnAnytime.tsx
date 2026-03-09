@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
@@ -27,7 +27,7 @@ function LearnAnytime() {
                 <Button className="bg-primary uppercase w-fit cursor-pointer  rounded-full px-4">
               <Link href={"/online-tutorials"}>
                   Subscribe
-<Link/>
+</Link>
                 </Button>
               </div>
             </div>
