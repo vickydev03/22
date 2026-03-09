@@ -63,7 +63,10 @@ function RegularClassesView() {
           <div className=" flex flex-col md:flex-row md:items-center gap-4">
             <DatePickerWithRange />
             <Button className="bg-primary text-xs md:text-sm capitalize px-4 lg:py-2">
-              Add Regular Class
+<Link href={"/dashboard/regular-classes/registrations"}>
+Add Regular Class
+</Link>
+              
             </Button>
           </div>
         </div>
