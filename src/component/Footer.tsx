@@ -4,10 +4,10 @@ import React from "react";
 
 function Footer() {
   const items = [
-    { label: "Workshops", url: "" },
-    { label: "Online Tutorials", url: "" },
-    { label: "Contact Us", url: "" },
-    { label: "Regular Classes", url: "" },
+    { label: "Workshops", url: "/workshops" },
+    { label: "Online Tutorials", url: "/online-tutorials" },
+    { label: "Contact Us", url: "/Contact-us" },
+    { label: "Regular Classes", url: "/regular-classes" },
     { label: "Gallery", url: "" },
   ];
   return (
