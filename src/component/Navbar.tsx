@@ -163,12 +163,12 @@ function Navbar({ isUserExist = false, locations }: NavbarProps) {
                     </li>
                   ))}
                    { !user ? <li
-                      key={i}
+                      
                       className="py-2 text-sm capitalize border-b border-dashed border-[#82828299] last:border-none"
                     >
                       <Link href={"/signin"}>Sign in</Link>
                     </li> : <li
-                      key={i}
+                     
                       className="py-2 text-sm capitalize border-b border-dashed border-[#82828299] last:border-none"
                     >
                       <Link href={"/dashboard"}>Dashboard</Link>
