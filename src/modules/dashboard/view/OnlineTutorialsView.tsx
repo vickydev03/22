@@ -4,6 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 import { useDashboardUserFilters } from "../hooks/useDashboardClasses";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import {
   Pagination,
@@ -68,11 +69,11 @@ function OnlineTutorialsView() {
       <div className="w-full px-5 lg:px-20 py-5 ">
         <div className="flex justify-between">
           <div className="font-semibold text-lg md:text-3xl text-[#656565]">
-            Students
+            Tutorials
           </div>
           <div className="">
             <Button className="bg-primary text-xs md:text-sm capitalize px-4 lg:py-2">
-              Add Users
+              <Link href={"dashboard/online-tutorials/create"}>Add Tutorial</Link>
             </Button>
           </div>
         </div>
