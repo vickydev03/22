@@ -42,7 +42,7 @@ function Navbar({ isUserExist = false, locations }: NavbarProps) {
         {/* Logo */}
         <div className="logo">
           <h3 className="text-primary italic font-open-sauce cursor-pointer hover:scale-105 transition-transform duration-300">
-            Vicky Akku
+            <Link href={"/"}>Vicky Akku</Link>
           </h3>
         </div>
 
