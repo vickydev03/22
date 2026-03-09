@@ -64,7 +64,7 @@ function Introduction() {
             </div>
             <div className="flex items-center justify-center md:justify-normal">
               <Button className="uppercase rounded-full transition-all duration-500 cursor-pointer font-open-sauce text-sm  md:text-lg text-white bg-[#4B4740] hover:bg-[#827B70] font-light">
-<Link href={"/about-us"}
+<Link href={"/about-us"}>
                 read their story
 </Link>
               </Button>
