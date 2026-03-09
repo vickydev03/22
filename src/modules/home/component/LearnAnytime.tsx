@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 function LearnAnytime() {
   return (
@@ -24,6 +25,7 @@ function LearnAnytime() {
               </p>
               <div className="flex items-center justify-center md:justify-start ">
                 <Button className="bg-primary uppercase w-fit cursor-pointer  rounded-full px-4">
+              <Link href={"/online-tutorials"}>
                   Subscribe
                 </Button>
               </div>
