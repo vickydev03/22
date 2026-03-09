@@ -110,7 +110,9 @@ function Navbar({ isUserExist = false, locations }: NavbarProps) {
                 className="bg-primary rounded-full cursor-pointer 
                                hover:scale-105 transition-transform duration-300 shadow-md"
               >
-                <User className="text-white size-5" />
+                <Link href={"/profile"}>
+       <User className="text-white size-5" />
+               </Link>
               </Button>
             ) : (
               <Button
@@ -173,6 +175,14 @@ function Navbar({ isUserExist = false, locations }: NavbarProps) {
                     >
                       <Link href={"/dashboard"}>Dashboard</Link>
                     </li>}
+                   {
+                     user && <li
+                     
+                      className="py-2 text-sm capitalize border-b border-dashed border-[#82828299] last:border-none"
+                    >
+                      <Link href={"/profile"}>Profile</Link>
+                    </li>
+         }
                 </ul>
               </motion.div>
             )}
