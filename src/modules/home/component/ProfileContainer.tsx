@@ -3,40 +3,44 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
+import Link from "next/link"; // Added missing import
 import { format } from "date-fns";
 
 function ProfileContainer() {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.user.profile.queryOptions());
 
-  const isActive =
-    new Date(data.userSubscription[0].class.endDate) < new Date();
+  // Handle case where subscription might be empty to prevent crash
+  const subscription = data.userSubscription?.[0];
+  const isActive = subscription 
+    ? new Date(subscription.class.endDate) < new Date() 
+    : false;
 
   return (
-    <div className="pt-[10rem] md:py-24 px-4">
-      <div className="bg-[#FFFBF4] py-6 rounded-[30px] lg:min-h-96">
-        <div className="w-full h-full flex flex-col lg:flex-row items-center gap-2 lg:gap-12">
-          {/* Avatar */}
-          <div className="flex items-center -mt-[25%] md:-mt-[0%] justify-between w-full md:w-fit md:h-fit p-3 lg:p-12">
-            <div className="bg-red-400 rounded-full size-28 sm:size-36 md:size-48 lg:size-72 flex items-center justify-center text-white text-2xl font-bold">
-              a
+    <div className="pt-24 md:pt-32 pb-24 px-4 max-w-7xl mx-auto">
+      <div className="bg-[#FFFBF4] py-6 rounded-[30px] lg:min-h-96 mb-12">
+        <div className="w-full h-full flex flex-col lg:flex-row items-center gap-6 lg:gap-12 px-4 lg:px-12">
+          {/* Avatar Section */}
+          <div className="flex items-center justify-between w-full lg:w-fit p-3">
+            <div className="bg-red-400 rounded-full size-28 sm:size-36 md:size-48 lg:size-72 flex items-center justify-center text-white text-2xl font-bold shrink-0">
+              {data.name?.charAt(0) || "U"}
             </div>
 
-            <div className="flex justify-center pt-[3rem] w-fit md:w-full h-full md:hidden  items-center">
+            <div className="flex justify-center md:hidden items-center ml-4">
               <button
-                className={`font-open-sauce px-5  md:hidden py-1 ${
+                className={`font-open-sauce px-5 py-1 ${
                   !isActive
                     ? "bg-[#F2E9F9] border-[#977DAE]"
                     : "bg-[#F7EDDD] border-[#A48E6A]"
-                } rounded-full tracking-wider text-[#827B70] border-2 text-sm sm:text-md lg:text-lg font-medium capitalize`}
+                } rounded-full tracking-wider text-[#827B70] border-2 text-sm font-medium capitalize`}
               >
                 {isActive ? "Rejoin" : "Active"}
               </button>
             </div>
           </div>
 
-          {/* User Info */}
-          <div className="w-full space-y-2 text-left px-4 lg:px-0">
+          {/* User Info Section */}
+          <div className="w-full space-y-4 text-left">
             <h3 className="font-bold tracking-wider text-[#2A2A2A] font-open-sauce text-2xl sm:text-3xl capitalize">
               {data.name}
             </h3>
@@ -45,10 +49,10 @@ function ProfileContainer() {
               {data.phone}
             </p>
 
-            {/* Class */}
-            <div className="flex  flex-col sm:flex-row  lg:items-start gap-3 sm:gap-6 justify-center lg:justify-start">
+            {/* Class Info */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
               <p className="capitalize text-[#656565] font-open-sauce text-sm sm:text-lg lg:text-xl font-medium tracking-wider">
-                {data.userSubscription[0].class.title}
+                {subscription?.class.title || "No Active Subscription"}
               </p>
 
               <button
@@ -56,69 +60,60 @@ function ProfileContainer() {
                   !isActive
                     ? "bg-[#F2E9F9] border-[#977DAE]"
                     : "bg-[#F7EDDD] border-[#A48E6A]"
-                } rounded-full tracking-wider text-[#827B70] border-2 text-sm sm:text-md lg:text-lg font-medium capitalize`}
+                } rounded-full tracking-wider text-[#827B70] border-2 text-sm lg:text-lg font-medium capitalize w-fit`}
               >
                 {isActive ? "Rejoin" : "Active"}
               </button>
             </div>
 
             {/* Stats */}
-            <div className="flex items-center   lg:justify-start gap-6 pt-4">
-              {/* Workshops */}
+            <div className="flex items-center gap-6 pt-2">
               <div className="flex items-center gap-3">
-                <div className="bg-[#977DAE] text-white font-semibold flex items-center justify-center w-[50px] h-[50px] md:size-18 rounded-md md:rounded-3xl text-sm md:text-lg">
+                <div className="bg-[#977DAE] text-white font-semibold flex items-center justify-center size-12 md:size-16 rounded-xl md:rounded-3xl text-sm md:text-lg">
                   {data.enrollments.length}
                 </div>
-
-                <div className="flex flex-col leading-tight">
-                  <p className="text-sm md:text-lg">Workshop</p>
-                  <p className="text-sm md:text-lg">Booked</p>
+                <div className="flex flex-col leading-tight text-xs md:text-base">
+                  <p>Workshop</p>
+                  <p>Booked</p>
                 </div>
               </div>
 
-              {/* Tutorials */}
               <div className="flex items-center gap-3">
-                <div className="bg-[#977DAE] text-white font-semibold flex items-center justify-center w-[50px] h-[50px] md:size-18 rounded-md md:rounded-3xl text-sm md:text-lg">
+                <div className="bg-[#977DAE] text-white font-semibold flex items-center justify-center size-12 md:size-16 rounded-xl md:rounded-3xl text-sm md:text-lg">
                   {data.tutorialAccess.length}
                 </div>
-
-                <div className="flex flex-col leading-tight">
-                  <p className="text-sm md:text-lg">Purchased</p>
-                  <p className="text-sm md:text-lg">Tutorials</p>
+                <div className="flex flex-col leading-tight text-xs md:text-base">
+                  <p>Purchased</p>
+                  <p>Tutorials</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[90%]a mx-auto">
-        <h2 className="font-passion-one text-3xl md:text-5xl  text-[#DAA3B0] uppercase">
+
+      <div className="w-full">
+        <h2 className="font-passion-one text-3xl md:text-5xl text-[#DAA3B0] uppercase mb-6">
           My Booking
         </h2>
-        <Tabs defaultValue="workshops">
-          <TabsList  className="bg-transparent gap-4">
-            <div className="w-full h-full flex items-center gap-4">
+        
+        <Tabs defaultValue="workshops" className="w-full">
+          <TabsList className="bg-transparent h-auto p-0 mb-8 overflow-x-auto justify-start no-scrollbar">
+            <div className="flex items-center gap-3 pb-2">
               <TabsTrigger
-                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-4  font-semibold text-[#656565] data-[state=active]:bg-primary
-  data-[state=active]:text-white
-  data-[state=active]:border-primary hover:bg-primary hover:text-white"
+                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-6 py-2 font-semibold text-[#656565] data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary whitespace-nowrap"
                 value="workshops"
               >
                 Workshops
               </TabsTrigger>
-
               <TabsTrigger
-                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-4  font-semibold text-[#656565] data-[state=active]:bg-primary
-  data-[state=active]:text-white
-  data-[state=active]:border-primary hover:bg-primary hover:text-white"
+                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-6 py-2 font-semibold text-[#656565] data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary whitespace-nowrap"
                 value="online tutorial"
               >
                 Online Tutorial
               </TabsTrigger>
               <TabsTrigger
-                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-4  font-semibold text-[#656565] data-[state=active]:bg-primary
-  data-[state=active]:text-white
-  data-[state=active]:border-primary hover:bg-primary hover:text-white"
+                className="rounded-full border-2 border-[#CFCFCF] tracking-wide bg-[#FFFBF4] px-6 py-2 font-semibold text-[#656565] data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary whitespace-nowrap"
                 value="Regular Class"
               >
                 Regular Classes
@@ -127,56 +122,36 @@ function ProfileContainer() {
           </TabsList>
 
           <TabsContent value="workshops">
-            <div className="flex col w-full gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {data.enrollments.map((e, i) => {
-                const formattedDate = format(
-                  e.workshop.eventDate,
-                  "do MMM yyyy | h b",
-                ).toUpperCase();
+                const formattedDate = format(new Date(e.workshop.eventDate), "do MMM yyyy | h b").toUpperCase();
                 return (
-                  <div
-                    key={i}
-                    className="bg-[#FFFBF4] w-full flex flex-col md:flex-row gap-5 rounded-[30px] px-4 py-4"
-                  >
-                    <div className=" relative">
+                  <div key={i} className="bg-[#FFFBF4] w-full flex flex-col md:flex-row gap-5 rounded-[30px] p-4 border border-black/5">
+                    <div className="relative shrink-0">
                       <Image
                         alt={e.workshop.title}
-                        className=" w-full md:w-64 max-h-[250px] md:max-h-42 object-cover md:object-center  rounded-[30px]"
-                        height={100}
-                        width={100}
+                        className="w-full md:w-64 h-48 md:h-40 object-cover rounded-[25px]"
+                        height={400}
+                        width={400}
                         src={e.workshop.thumbnail}
                       />
                     </div>
-                    <div className="flex flex-col md:flex-row gap-6 items-center md:items-start justify-between w-full">
-                      <div className="flex flex-col gap-2 md:gap-4">
-                        <h3 className="font-open-sauce text-center md:text-left font-bold text-[#656565] text-xl md:text-3xl">
+                    <div className="flex flex-col md:flex-row gap-4 justify-between w-full">
+                      <div className="flex flex-col gap-3">
+                        <h3 className="font-open-sauce font-bold text-[#656565] text-xl md:text-2xl">
                           {e.workshop.title}
                         </h3>
-
-                        <div className=" text-md rounded-full md:rounded-sm  md:text-md    lg:text-xl px-3 py-2 bg-[#F2E9F9] text-[#6B6B6B] w-fit flex items-center gap-3 shadow-sm shadow-black/5">
-                          <span className="inline-block font-normal">
-                            Date-
-                          </span>
-                          <h3 className="inline-block font-bold ">
-                            {formattedDate}
-                          </h3>
+                        <div className="text-sm lg:text-base px-4 py-2 bg-[#F2E9F9] text-[#6B6B6B] rounded-full w-fit flex items-center gap-2">
+                          <span className="font-normal">Date:</span>
+                          <span className="font-bold">{formattedDate}</span>
                         </div>
-                        <div className="hidden md:block">
-                          <p className="text-[#827B70] text-sm md:text-lg flex items-center gap-2 font-medium">
-                            <span>
-                              <Image
-                                src={"/image/svg/address.svg"}
-                                alt="address"
-                                height={40}
-                                width={40}
-                              />
-                            </span>
-                            <span>{e.workshop.location.address}</span>
-                          </p>
+                        <div className="flex items-center gap-2 text-[#827B70] text-sm md:text-base">
+                           <Image src="/image/svg/address.svg" alt="loc" height={20} width={20} />
+                           <span>{e.workshop.location.address}</span>
                         </div>
                       </div>
-                      <div className=" px-4  ">
-                        <span className="bg-primary w-full text-white px-6 rounded-full py-2 font-open-sauce text-xl ">
+                      <div className="md:self-start">
+                        <span className="bg-primary text-white px-8 py-2 rounded-full font-open-sauce font-semibold block text-center">
                           Paid
                         </span>
                       </div>
@@ -186,79 +161,62 @@ function ProfileContainer() {
               })}
             </div>
           </TabsContent>
+
           <TabsContent value="online tutorial">
-            <div className=" grid grid-cols-1 bg-[#FFFBF4] rounded-[30px] md:grid-cols-3 ">
-              {data.tutorialAccess.map((e, i) => {
-                return (
-                  <Link key={i} href={`/online-tutorials/${e.id}/video-play`}>
-                    <div
-                    
-                    className=" w-full flex flex-col gap-5  px-4 py-4"
-                  >
-                    <div className=" relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.tutorialAccess.map((e, i) => (
+                <Link key={i} href={`/online-tutorials/${e.id}/video-play`} className="block group">
+                  <div className="bg-[#FFFBF4] rounded-[30px] p-4 h-full border border-black/5 group-hover:shadow-md transition-shadow">
+                    <div className="relative mb-4">
                       <Image
                         alt={e.tutorial.title}
-                        className=" w-full max-h-[250px] md:max-h-64 object-cover md:object-center  rounded-[30px]"
-                        height={100}
-                        width={100}
+                        className="w-full aspect-video object-cover rounded-[25px]"
+                        height={300}
+                        width={400}
                         src={e.tutorial.thumbnail}
                       />
                     </div>
-                    <div className="flex flex-col gap-6 items-center md:items-start justify-between w-full">
-                      <div className="flex flex-col gap-2 md:gap-4">
-                        <h3 className="font-open-sauce text-center md:text-left font-bold text-[#656565] text-xl md:text-3xl">
-                          {e.tutorial.title}
-                        </h3>
-                        <span className="bg-primary w-fit text-white px-6 rounded-full py-1 font-open-sauce text-xl ">
-                          Paid
-                        </span>
-                      </div>
+                    <div className="space-y-3">
+                      <h3 className="font-open-sauce font-bold text-[#656565] text-lg md:text-xl line-clamp-2">
+                        {e.tutorial.title}
+                      </h3>
+                      <span className="bg-primary text-white px-6 py-1 rounded-full text-sm inline-block">
+                        Paid
+                      </span>
                     </div>
                   </div>
-                );
-                  </div>
-              })}
+                </Link>
+              ))}
             </div>
           </TabsContent>
+
           <TabsContent value="Regular Class">
-            <div className="flex col w-full gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {data.userSubscription.map((e, i) => {
-                const formattedDate = format(
-                  e.class.startDate,
-                  "do MMM yyyy | h b",
-                ).toUpperCase();
+                const formattedDate = format(new Date(e.class.startDate), "do MMM yyyy | h b").toUpperCase();
                 return (
-                  <div
-                    key={i}
-                    className="bg-[#FFFBF4] w-full flex flex-col md:flex-row gap-5 rounded-[30px] px-4 py-4"
-                  >
-                    <div className=" relative">
+                  <div key={i} className="bg-[#FFFBF4] w-full flex flex-col md:flex-row gap-5 rounded-[30px] p-4 border border-black/5">
+                    <div className="relative shrink-0">
                       <Image
                         alt={e.class.title}
-                        className=" w-full md:w-64 max-h-[250px] md:max-h-42 object-cover md:object-center  rounded-[30px]"
-                        height={100}
-                        width={100}
+                        className="w-full md:w-64 h-48 md:h-40 object-cover rounded-[25px]"
+                        height={400}
+                        width={400}
                         src={e.class.thumbnail}
                       />
                     </div>
-                    <div className="flex flex-col md:flex-row gap-6 items-center md:items-start justify-between w-full">
-                      <div className="flex flex-col gap-2 md:gap-4">
-                        <h3 className="font-open-sauce text-center md:text-left font-bold text-[#656565] text-xl md:text-3xl">
+                    <div className="flex flex-col md:flex-row gap-4 justify-between w-full">
+                      <div className="flex flex-col gap-3">
+                        <h3 className="font-open-sauce font-bold text-[#656565] text-xl md:text-2xl">
                           {e.class.title}
                         </h3>
-
-                        <div className=" text-md rounded-full md:rounded-sm  md:text-md    lg:text-xl px-3 py-2 bg-[#F2E9F9] text-[#6B6B6B] w-fit flex items-center gap-3 shadow-sm shadow-black/5">
-                          <span className="inline-block font-normal">
-                            Date-
-                          </span>
-                          <h3 className="inline-block font-bold ">
-                            {formattedDate}
-                          </h3>
+                        <div className="text-sm lg:text-base px-4 py-2 bg-[#F2E9F9] text-[#6B6B6B] rounded-full w-fit flex items-center gap-2">
+                          <span className="font-normal">Start Date:</span>
+                          <span className="font-bold">{formattedDate}</span>
                         </div>
-                        <div className="hidden md:block"></div>
                       </div>
-                      <div className=" px-4  ">
-                        <span className="bg-primary w-full text-white px-6 rounded-full py-2 font-open-sauce text-xl ">
+                      <div className="md:self-start">
+                        <span className="bg-primary text-white px-8 py-2 rounded-full font-open-sauce font-semibold block text-center">
                           Paid
                         </span>
                       </div>
