@@ -15,7 +15,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "../component/DataTable";
 import { regularClassColumns } from "../component/RegularClassColumn";
-
+import Link from "next/link";
 function RegularClassesView() {
   const [filters, setFilters] = useRegularClassesFilters();
 
