@@ -5,8 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import React from 'react'
 import { DataTable } from '../component/DataTable'
 import { Button } from '@/components/ui/button'
-
-
+import Link from "next/link";
 
 import {
   Pagination,
@@ -65,7 +64,10 @@ function DashBoardWorkshopView() {
                   </div>
                   <div className="">
                     <Button className="bg-primary text-xs md:text-sm capitalize px-4 lg:py-2">
-                      Add Workshop
+                    <Link href={"/dashboard/workshops/registrations"}>
+Add Workshop
+</Link/>
+                      
                     </Button>
                   </div>
                 </div>
